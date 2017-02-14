@@ -12,11 +12,6 @@ try:
     tso.set_language('en') 
     tso.set_include_entities(False)
 
-    # Create TwitterSearch object with tokens
-    tso.set_keywords(['bitch', 'elizabeth warren']) # let's define all words we would like to have a look for
-    tso.set_language('en') 
-    tso.set_include_entities(False) 
-
     ts = TwitterSearch(
         consumer_key = 'JPIQgfrt5gTI90PgC2DNoLf44',
         consumer_secret = 'wt1ciclku2cftRrv1WrNY3sidoSbRQ3xSP74fKO1dafT1pVHzn',
