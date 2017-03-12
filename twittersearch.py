@@ -4,11 +4,11 @@ from TwitterSearch import *
 
 cgitb.enable()
 
-print("Content-Type: text/plain;charset=utf-8")
+tweets = []
 
 try:
     tso = TwitterSearchOrder() # create a TwitterSearchOrder object
-    tso.set_keywords(['kitchen', 'elizabeth warren']) # all the terms to search for
+    tso.set_keywords(['bitch', 'warren']) # all the terms to search for
     tso.set_language('en') 
     tso.set_include_entities(False)
 
@@ -21,7 +21,10 @@ try:
 
      # main part
     for tweet in ts.search_tweets_iterable(tso):
-        print( '@%s tweeted: %s' % ( tweet['user']['screen_name'], tweet['text'] ) + '\n')
+        tweets.append('@%s tweeted: %s' % ( tweet['user']['screen_name'], tweet['text'] ) + '\n')
 
 except TwitterSearchException as e: # take care of all those ugly errors if there are some
     print(e)
+
+for tweet in tweets:
+        print(tweet)
