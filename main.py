@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 import cgitb
-import requests
+import os
 from TwitterSearch import *
 
 cgitb.enable()
@@ -41,5 +41,5 @@ def tweets():
 
 
 if __name__ == "__main__": #only start web server if this file is called directly  
-    # port = int(os.environ.get('PORT', 33507)) 
-    app.run(debug=True, port = 33507) #starts app on web server 
+    port = int(os.environ.get('PORT', 5000)) 
+    app.run(debug=True, host='0.0.0.0', port=port) #starts app on web server 
