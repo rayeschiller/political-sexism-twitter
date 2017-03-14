@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import cgitb
+import requests
 from TwitterSearch import *
 
 cgitb.enable()
@@ -36,6 +37,7 @@ def index():
 @app.route('/tweets')
 def tweets():
     return "<h2>Tuna is good</h2>"
+
 
 
 if __name__ == "__main__": #only start web server if this file is called directly   
