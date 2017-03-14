@@ -40,5 +40,6 @@ def tweets():
 
 
 
-if __name__ == "__main__": #only start web server if this file is called directly   
+if __name__ == "__main__": #only start web server if this file is called directly  
+    port = int(os.environ.get('PORT', 33507)) 
     app.run(debug=True) #starts app on web server 
