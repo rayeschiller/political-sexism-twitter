@@ -13,7 +13,7 @@ def index():
 
     try:
         tso = TwitterSearchOrder() # create a TwitterSearchOrder object
-        tso.set_keywords(['hello']) # all the terms to search for
+        tso.set_keywords(['ivanka', 'bitch']) # all the terms to search for
         tso.set_language('en') 
         tso.set_include_entities(False)
 
