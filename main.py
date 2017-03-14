@@ -14,7 +14,7 @@ def index():
 
     try:
         tso = TwitterSearchOrder() # create a TwitterSearchOrder object
-        tso.set_keywords(['hello']) # all the terms to search for
+        tso.set_keywords(['clinton', 'bitch']) # all the terms to search for
         tso.set_language('en') 
         tso.set_include_entities(False)
 
@@ -37,8 +37,6 @@ def index():
 @app.route('/tweets')
 def tweets():
     return "<h2>Tuna is good</h2>"
-
-
 
 if __name__ == "__main__": #only start web server if this file is called directly  
     port = int(os.environ.get('PORT', 5000)) 
