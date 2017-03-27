@@ -2,21 +2,21 @@
 <html>
 <head>
     <title>Political Misogyny in Tweets</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <!-- // <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <!-- // <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script> -->
     <script src="static/js/script.js"></script>
 
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> -->
    
-    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='js/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 <body>
 
-    <ul>
+   
         <!-- passing in list and iterating through it -->
         {% for tweet in tweets %}
-            <li>{{ tweet }} </li>
+            <p>{{ tweet }} </p>
         {% endfor %}
-    </ul>
+    
 </body>
 </html>
