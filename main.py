@@ -1,5 +1,6 @@
 from flask import Flask, render_template
-# from flask.ext.socketio import SocketIO, emit
+from flask.ext.socketio import SocketIO
+import json
 import cgitb
 import os
 from TwitterSearch import *
@@ -7,8 +8,7 @@ from TwitterSearch import *
 cgitb.enable()
 
 app = Flask(__name__)
-
-# socketio = SocketIO(app)
+socketio = SocketIO(app)
 
 # routing/mapping a url on website to a python function 
 @app.route('/') #root directory, home page of website, called a decorator
@@ -37,6 +37,10 @@ def index():
 
     return render_template("index.html", tweets = tweets)
 
+@socketio.on('send_message')
+def handle_source(json_data):
+    text = json_data['message'].encode('ascii', 'ignore')
+    socketio.emit('echo', {'echo': 'Server Says: '+text})
 @app.route('/tweets')
 def tweets():
     return "<h2>Tuna is good</h2>"

@@ -2,17 +2,43 @@
 <html>
 <head>
     <title>Political Misogyny in Tweets</title>
-    <!-- // <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-    <!-- // <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script> -->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <!-- // <script src="static/js/script.js"></script> -->
 
     <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> -->
-   
+    <script type="text/javascript" charset="utf-8">
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+            socket.on('echo', function(data){ //receives events with the name echo
+                $('#response').html('<p>'+data.echo+'</p>');
+            });
+            
+            function send(){ //emits event named send_message
+                socket.emit('send_message', {message : $('form textarea').val()});
+            }
+    </script>
+    <style>
+            div{
+                position: relative;
+                margin-left: auto;
+                margin-right: auto;
+                width: 400px;
+            }
+            textarea{
+                width: 100%;
+                height: 100px;
+            }
+        </style>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 <body>
-
-   
+        <div class="input">
+            <form>
+                <textarea placeholder="Send a message to the server..."></textarea>
+                <button type="button" onclick="send(); return false;">Send</button>
+            </form>
+        </div>
+        <div id="response"></div>
         <!-- passing in list and iterating through it -->
         {% for tweet in tweets %}
             <p>{{ tweet }} </p>
