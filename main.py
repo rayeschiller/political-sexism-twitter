@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-#from flask.ext.socketio import SocketIO, send
+from flask.ext.socketio import SocketIO, send
 #import json
 import cgitb
 import os
@@ -9,7 +9,7 @@ cgitb.enable()
 
 app = Flask(__name__)
 app.config['SECRET KEY'] = 'mysecret'
-socketio = SocketIO(app)
+#socketio = SocketIO(app)
 
 # routing/mapping a url on website to a python function 
 @app.route('/') #root directory, home page of website, called a decorator
