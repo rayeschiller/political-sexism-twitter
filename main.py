@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from flask.ext.socketio import SocketIO, send
+#from flask.ext.socketio import SocketIO, send
 #import json
 import cgitb
 import os
@@ -8,7 +8,7 @@ from TwitterSearch import *
 cgitb.enable()
 
 app = Flask(__name__)
-app.config['SECRET KEY'] = 'mysecret'
+#app.config['SECRET KEY'] = 'mysecret'
 #socketio = SocketIO(app)
 
 # routing/mapping a url on website to a python function 
@@ -43,9 +43,9 @@ def index():
 #    print('received message: ' + message)
 #    send(msg, broadcast=True)
 #    
-#@app.route('/tweets')
-#def tweets():
-#    return "<h2>Tuna is good</h2>"
+@app.route('/tweets')
+def tweets():
+    return "<h2>Tweets are good</h2>"
 
 if __name__ == "__main__": #only start web server if this file is called directly  
 #    socketio.run(app)
