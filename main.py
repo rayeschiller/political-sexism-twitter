@@ -41,10 +41,12 @@ def index():
 def handle_source(json_data):
     text = json_data['message'].encode('ascii', 'ignore')
     socketio.emit('echo', {'echo': 'Server Says: '+text})
+    
 @app.route('/tweets')
 def tweets():
     return "<h2>Tuna is good</h2>"
 
 if __name__ == "__main__": #only start web server if this file is called directly  
-    port = int(os.environ.get('PORT', 5000)) 
-    app.run(debug=True, host='0.0.0.0', port=port) #starts app on web server 
+    socketio.run(app)
+#    port = int(os.environ.get('PORT', 5000)) 
+#    app.run(debug=True, host='0.0.0.0', port=port) #starts app on web server 
