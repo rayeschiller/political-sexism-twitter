@@ -1,13 +1,14 @@
 from flask import Flask, render_template
-from flask.ext.socketio import SocketIO
+from flask.ext.socketio import SocketIO, send
 import json
 import cgitb
 import os
 from TwitterSearch import *
 
-cgitb.enable()
+#cgitb.enable()
 
 app = Flask(__name__)
+app.config['SECRET KEY'] = 'mysecret'
 socketio = SocketIO(app)
 
 # routing/mapping a url on website to a python function 
@@ -37,16 +38,16 @@ def index():
 
     return render_template("index.html", tweets = tweets)
 
-@socketio.on('send_message')
-def handle_source(json_data):
-    text = json_data['message'].encode('ascii', 'ignore')
-    socketio.emit('echo', {'echo': 'Server Says: '+text})
-    
-@app.route('/tweets')
-def tweets():
-    return "<h2>Tuna is good</h2>"
+#@socketio.on('message')
+#def handle_message(message):
+#    print('received message: ' + message)
+#    send(msg, broadcast=True)
+#    
+#@app.route('/tweets')
+#def tweets():
+#    return "<h2>Tuna is good</h2>"
 
 if __name__ == "__main__": #only start web server if this file is called directly  
-    socketio.run(app)
-#    port = int(os.environ.get('PORT', 5000)) 
-#    app.run(debug=True, host='0.0.0.0', port=port) #starts app on web server 
+#    socketio.run(app)
+    port = int(os.environ.get('PORT', 5000)) 
+    app.run(debug=True, host='0.0.0.0', port=port) #starts app on web server 
