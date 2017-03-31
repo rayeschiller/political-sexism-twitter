@@ -1,11 +1,11 @@
 from flask import Flask, render_template
-from flask.ext.socketio import SocketIO, send
-import json
+#from flask.ext.socketio import SocketIO, send
+#import json
 import cgitb
 import os
 from TwitterSearch import *
 
-#cgitb.enable()
+cgitb.enable()
 
 app = Flask(__name__)
 app.config['SECRET KEY'] = 'mysecret'
