@@ -4,7 +4,7 @@ from flask import Flask, render_template
 import cgitb
 import os
 from TwitterSearch import *
-import datetime
+
 
 cgitb.enable()
 
@@ -20,7 +20,7 @@ def index():
         tso = TwitterSearchOrder() # create a TwitterSearchOrder object
         tso.set_keywords(['clinton', 'bitch']) # all the terms to search for
         tso.set_language('en') 
-        tso.set_count(1)
+        tso.set_count(5)
         tso.set_include_entities(False)
         
 
@@ -40,7 +40,7 @@ def index():
                          'RT': tweet['retweeted']})
 #         if tweet.has_key('retweeted_status'):   
 #             tweets.append({'text2': tweet['retweeted_status']['text']})
-         print(tweets)
+#         print(tweets)
     except TwitterSearchException as e: # take care of all those ugly errors if there are some
          print(e)
 
