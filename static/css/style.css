@@ -1,6 +1,6 @@
 p {
     font: normal 15px 'Helvetica Neue', Arial, sans-serif;  
-    margin: 0 5px 10px 0;
+    margin: 0 5px 0px 0;
     color: #292f33
 }
 
@@ -10,12 +10,28 @@ p {
 }
 
 #username{
-    font: normal 10px 'Helvetica Neue', Arial, sans-serif;
+    font: normal 14px 'Helvetica Neue', Arial, sans-serif;
     color: #8899a6 
+
 }
 
+#text{
+    font: normal 15px 'Helvetica Neue', Arial, sans-serif;  
+    margin-bottom: 5px
+}
 #date{
-    font: normal 10px 'Helvetica Neue', Arial, sans-serif;
+    font: normal 11px 'Helvetica Neue', Arial, sans-serif;
     color: #8899a6 
+    text-align: right;
+    float:right;
 }
 
+a{
+    color:#00aced;
+    text-decoration:none;
+}
+
+#profimg {
+    float:left;
+    margin: 0px 10px 10px 0px;
+}

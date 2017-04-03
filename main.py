@@ -37,10 +37,11 @@ def index():
                          'date': tweet['created_at'],
                          'name': tweet['user']['name'],
                          'screen_name': tweet['user']['screen_name'],
-                         'RT': tweet['retweeted']})
+                         'prof': tweet['user']['profile_image_url'],
+                         'user_url': tweet['user']['url']})
 #         if tweet.has_key('retweeted_status'):   
 #             tweets.append({'text2': tweet['retweeted_status']['text']})
-#         print(tweets)
+   
     except TwitterSearchException as e: # take care of all those ugly errors if there are some
          print(e)
 
