@@ -1,10 +1,15 @@
 p {
-    font: normal 15px Arial, Palatino, sans-serif;  
+    font: normal 15px 'Helvetica Neue', Arial, sans-serif;  
     margin: 0 5px 10px 0;
+    color: '#292f33'
 }
 
-div#name{
-    font: normal 15px Arial, Palatino, sans-serif;  
+span#username{
+    font: normal 10px 'Helvetica Neue', Arial, sans-serif;
+    color: '#8899a6' 
+}
+span#name{
+    font: normal 15px 'Helvetica Neue', Arial, sans-serif;  
     font-weight:bold;
 }
 
