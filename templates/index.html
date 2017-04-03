@@ -13,8 +13,9 @@
 <body>
     <!-- passing in list and iterating through it -->
     {% for tweet in tweets %}
-            <p><span id="name">{{tweet['name'] }}</span> <span id="username">@{{ tweet['screen_name'] }}</span> {{ tweet['date'] }}</p>                
+            <p><div id="name">{{tweet['name'] }}</div> <div id="username">@{{ tweet['screen_name'] }}</div></p>                
             <p>{{tweet['text'] }}</p>
+            <p><div id="date"{{ tweet['date'] }}</div></p>
             <br>
     {% endfor %}
     

@@ -4,12 +4,18 @@ p {
     color: '#292f33'
 }
 
-span#username{
+div#name{
+    font: normal 15px 'Helvetica Neue', Arial, sans-serif;  
+    font-weight:bold;
+}
+
+div#username{
     font: normal 10px 'Helvetica Neue', Arial, sans-serif;
     color: '#8899a6' 
 }
-span#name{
-    font: normal 15px 'Helvetica Neue', Arial, sans-serif;  
-    font-weight:bold;
+
+div#date{
+    font: normal 10px 'Helvetica Neue', Arial, sans-serif;
+    color: '#8899a6' 
 }
 
