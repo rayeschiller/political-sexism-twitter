@@ -58,4 +58,4 @@ def tweets():
 if __name__ == "__main__": #only start web server if this file is called directly  
 #    socketio.run(app)
     port = int(os.environ.get('PORT', 5000)) 
-    app.run(debug=True, host='127.0.0.1', port=port) #starts app on web server 
+    app.run(debug=True, host='0.0.0.0', port=port) #starts app on web server 
