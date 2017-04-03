@@ -1,21 +1,21 @@
 p {
     font: normal 15px 'Helvetica Neue', Arial, sans-serif;  
     margin: 0 5px 10px 0;
-    color: '#292f33'
+    color: #292f33
 }
 
-div#name{
+#name{
     font: normal 15px 'Helvetica Neue', Arial, sans-serif;  
     font-weight:bold;
 }
 
-div#username{
+#username{
     font: normal 10px 'Helvetica Neue', Arial, sans-serif;
-    color: '#8899a6' 
+    color: #8899a6 
 }
 
-div#date{
+#date{
     font: normal 10px 'Helvetica Neue', Arial, sans-serif;
-    color: '#8899a6' 
+    color: #8899a6 
 }
 
