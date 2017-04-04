@@ -37,7 +37,7 @@ def index():
                          'date': tweet['created_at'],
                          'name': tweet['user']['name'],
                          'screen_name': tweet['user']['screen_name'],
-                         'prof': tweet['user']['profile_image_url'],
+                         'prof': tweet['user']['profile_image_url_https'],
                          'user_url': tweet['user']['url']})
 #         if tweet.has_key('retweeted_status'):   
 #             tweets.append({'text2': tweet['retweeted_status']['text']})
