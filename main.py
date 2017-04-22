@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 from gevent import monkey;
 monkey.patch_all()
 
@@ -10,13 +11,11 @@ from config import CONF
 from twitterstreamer import TwitterStreamer, TwitterWatchDog
 
 # server side 
-# Initialize and configure Flask
+# Initialize and configure Flask and SocketIO
 app = Flask(__name__)  
 app.config['SECRET_KEY'] = 'secret'  
 app.debug = True
-# initialize SocketIo
 socketio = SocketIO(app)
-
 
 watchDog = TwitterWatchDog()
 # routing/mapping a url on website to a python function 
@@ -43,7 +42,7 @@ def tweets_disconnect():
     watchDog.check_alive()
     print('server disconnected')
 
-@app.route('/tweets')
+@app.route('/tweets2')
 def tweets():
     tweets = []
     try:

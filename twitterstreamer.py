@@ -1,5 +1,6 @@
 from twython import TwythonStreamer
 from config import CONF
+import gevent
 
 # Twitter stream class 
 class TwitterStreamer(TwythonStreamer):
@@ -24,7 +25,7 @@ class TwitterStreamer(TwythonStreamer):
 # Twitter Watch Dog class
 class TwitterWatchDog:
     def __init__(self):
-        wordlist = ['coffee']
+        wordlist = ['clinton']
         self.streamer = TwitterStreamer(CONF['APP_KEY'], CONF['APP_SECRET'], CONF['OAUTH_TOKEN'], CONF['OAUTH_TOKEN_SECRET'])
         self.green = gevent.spawn(self.streamer.statuses.filter, track=wordlist)
 

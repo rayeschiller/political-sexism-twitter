@@ -27,6 +27,7 @@ p {
 }
 
 a{
+    font: normal 15px 'Helvetica Neue', Arial, sans-serif; 
     color:#00aced;
     text-decoration:none;
 }
