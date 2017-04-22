@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8"> 
     <title>Political Misogyny in Tweets</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
-    <!-- <script src="static/js/script.js"></script> -->  
-    <style>   
-    </style>
-    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <script type="text/javascript" src="static/linkify.min.js"></script>
+    <script type="text/javascript" src="static/linkify-jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
+      
+    <script type="text/javascript" charset="utf-8">
+            $(document).ready(function(){
+                // start up the SocketIO connection the server
+                namespace = '/tweets';
+                
+                var socket = io.connect('//' + document.domain + ':' + location.port + namespace);
+
+                socket.on('connect', function(){
+                    // socket.send('user has connected!');
+                    console.log('user connected on client side');
+                })
+
+                //front end handling
+                //on receiving tweet message
+                socket.on('tweet', function(msg) {
+                    $("#tweetArea").prepend('<a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"><img id="profimg" src="' + msg.user.profile_image_url_https + '"</a><a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank">@' + msg.user.screen_name + '</a>:<div id="text"> ' + msg.text + '</div><br>');
+                        //profile image
+                        // '<a href = "https://twitter.com/' +msg.user.screen_name + '"target="_blank"><img id="profimg" src="' + msg.user.profile_image_url_https + '"/></a>
+                        //user name
+                        // '<p><span id="name">' + msg.user.name + '</span>
+                        // <span id="username"><a href="https://twitter.com/' + msg.user.screen_name + '"target="_blank"</a></span></p>
+                        // <div> id="text">' + msg.text + '</div>');
+                    $('#tweetArea').linkify({
+                        target: "_blank"    
+                });
+
+            });
+        });
+        </script>
 </head>
 <body>
-    <!-- passing in list and iterating through it -->
-    {% for tweet in tweets %}
-            <a href="https://twitter.com/{{tweet['screen_name']}}"><img id="profimg" src="{{tweet['prof']}}"/></a>
-            <p><span id="name">{{tweet['name'] }}</span> <span id="username"><a href="https://twitter.com/{{tweet['screen_name']}}"> @{{ tweet['screen_name'] }}</a></span></p>       
-            <div id="text">{{tweet['text'] }}</div>
-            <p><span id="date">{{ tweet['date'] }}</span></p>
-            <br>
-           
-    {% endfor %}
+       
+        <div id="tweetArea" style="overflow:auto; height: 500px;" ></div>
     
 </body>
 </html>

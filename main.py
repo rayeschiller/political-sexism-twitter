@@ -1,26 +1,56 @@
-from flask import Flask, render_template
-#from flask.ext.socketio import SocketIO, send
-#import json
-import cgitb
+from gevent import monkey;
+monkey.patch_all()
+
+import gevent
 import os
-from TwitterSearch import *
+from flask import Flask, render_template, request
+from flask_socketio import SocketIO, emit
+from twython import TwythonStreamer
+from config import CONF
+from twitterstreamer import TwitterStreamer, TwitterWatchDog
+
+# server side 
+# Initialize and configure Flask
+app = Flask(__name__)  
+app.config['SECRET_KEY'] = 'secret'  
+app.debug = True
+# initialize SocketIo
+socketio = SocketIO(app)
 
 
-cgitb.enable()
-
-app = Flask(__name__)
-#app.config['SECRET KEY'] = 'mysecret'
-#socketio = SocketIO(app)
-
+watchDog = TwitterWatchDog()
 # routing/mapping a url on website to a python function 
 @app.route('/') #root directory, home page of website, called a decorator
 def index():
+    watchDog.check_alive()
+    return render_template("index.html")
+
+ # in terminal handling
+@socketio.on('connect', namespace = '/tweets')
+def tweets_connect():
+    print(' connected on server side')
+    watchDog.check_alive()
+    while True:
+        try:
+            tweet = watchDog.streamer.queue.get(timeout=5)
+        except gevent.queue.Empty:
+            watchDog.check_alive()
+        else:
+            emit('tweet', tweet, broadcast=True)
+
+@socketio.on('disconnect', namespace = '/tweets')
+def tweets_disconnect():
+    watchDog.check_alive()
+    print('server disconnected')
+
+@app.route('/tweets')
+def tweets():
     tweets = []
     try:
         tso = TwitterSearchOrder() # create a TwitterSearchOrder object
         tso.set_keywords(['clinton', 'bitch']) # all the terms to search for
         tso.set_language('en') 
-        tso.set_count(50)
+        tso.set_count(5)
         tso.set_include_entities(False)
         
 
@@ -39,24 +69,15 @@ def index():
                          'screen_name': tweet['user']['screen_name'],
                          'prof': tweet['user']['profile_image_url_https'],
                          'user_url': tweet['user']['url']})
-#         if tweet.has_key('retweeted_status'):   
-#             tweets.append({'text2': tweet['retweeted_status']['text']})
-   
+    
     except TwitterSearchException as e: # take care of all those ugly errors if there are some
          print(e)
 
     return render_template("index.html", tweets = tweets)
-
-#@socketio.on('message')
-#def handle_message(message):
-#    print('received message: ' + message)
-#    send(msg, broadcast=True)
-#    
-@app.route('/tweets')
-def tweets():
-    return "<h2>Tweets are good</h2>"
-
+   
 if __name__ == "__main__": #only start web server if this file is called directly  
-#    socketio.run(app)
-    port = int(os.environ.get('PORT', 5000)) 
-    app.run(debug=True, host='0.0.0.0', port=port) #starts app on web server 
+    try:
+        port = int(os.environ.get('PORT', 5000)) 
+        socketio.run(app, host='0.0.0.0', port = port)
+    except KeyboardInterrupt:
+        pass
