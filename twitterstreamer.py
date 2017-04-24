@@ -25,7 +25,7 @@ class TwitterStreamer(TwythonStreamer):
 # Twitter Watch Dog class
 class TwitterWatchDog:
     def __init__(self):
-        wordlist = ['clinton']
+        wordlist = ['whore hillary,pussy hillary, cunt hillary, skank hillary, bitch hillary, slut hillary, bimbo hillary, shrill hillary, feminazi hillary, hillary kitchen, fuck hillary, whore clinton,pussy clinton, cunt clinton, skank clinton, bitch clinton, slut clinton, bimbo clinton, shrill clinton, feminazi clinton, fuck clinton, clinton kitchen, whore ivanka,pussy ivanka, cunt ivanka, skank ivanka, bitch ivanka, slut ivanka, bimbo ivanka, shrill ivanka, feminazi ivanka, ivanka kitchen, fuck ivanka,whore ElizabethWarren,pussy ElizabethWarren, cunt ElizabethWarren, skank ElizabethWarren, bitch ElizabethWarren, slut ElizabethWarren, bimbo ElizabethWarren, shrill ElizabethWarren, feminazi ElizabethWarren, ElizabethWarren kitchen, fuck ElizabethWarren, whore Elizabeth Warren,pussy Elizabeth Warren, cunt Elizabeth Warren, skank Elizabeth Warren, bitch Elizabeth Warren, slut Elizabeth Warren, bimbo Elizabeth Warren, shrill Elizabeth Warren, feminazi Elizabeth Warren, Elizabeth Warren kitchen, fuck Elizabeth Warren, ']
         self.streamer = TwitterStreamer(CONF['APP_KEY'], CONF['APP_SECRET'], CONF['OAUTH_TOKEN'], CONF['OAUTH_TOKEN_SECRET'])
         self.green = gevent.spawn(self.streamer.statuses.filter, track=wordlist)
 

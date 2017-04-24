@@ -1,21 +1,18 @@
-<!DOCTYPE html>
+
+{% extends "bootstrap/base.html" %}
 <html>
 <head>
     <meta charset="UTF-8"> 
-    <title>Political Misogyny in Tweets</title>
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+     {% block title %}Political Twitter Misogyny{% endblock %}
+    {% block scripts %}{{super()}}<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
     <script type="text/javascript" src="static/linkify.min.js"></script>
-    <script type="text/javascript" src="static/linkify-jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
-      
+    <script type="text/javascript" src="static/linkify-jquery.min.js"></script>      
     <script type="text/javascript" charset="utf-8">
             $(document).ready(function(){
                 // start up the SocketIO connection the server
                 namespace = '/tweets';
-                
                 var socket = io.connect('//' + document.domain + ':' + location.port + namespace);
-
                 socket.on('connect', function(){
                     // socket.send('user has connected!');
                     console.log('user connected on client side');
@@ -34,14 +31,46 @@
                     $('#tweetArea').linkify({
                         target: "_blank"    
                 });
-
             });
         });
-        </script>
-</head>
-<body>
-       
-        <div id="tweetArea" style="overflow:auto; height: 500px;" ></div>
+    </script> {% endblock %}
+    {% block styles %} {{super()}}
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">   {% endblock %}
+    </head>
+
+   {% block content %}
+   <body>
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="#">Home</a></li>
+            <li role="presentation"><a href="#">About</a></li>
+            <li role="presentation"><a href="#">Rina Schiller</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Political Sexism in Tweets</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Political Gender Biases </h1>
+        <p class="lead">Exposing Sexist Tweets about Female Politicians</p>
+        
+      </div>
+
+      <div class="row marketing">
+        <div class="col-lg-6">
+          <div id="tweetArea" style="overflow:auto; height: 500px;" ></div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2017 Rina Schiller</p>
+      </footer>
+
+    </div> <!-- /container -->
+
     
-</body>
+    </body>
+     {% endblock %}  
 </html>
