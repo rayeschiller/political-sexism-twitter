@@ -14,7 +14,7 @@ class TwitterStreamer(TwythonStreamer):
     def on_success(self,data):
         if data['in_reply_to_status_id'] == None and data['in_reply_to_screen_name'] == None:
             self.queue.put_nowait(data)
-            print(data)
+            # print(data)
             if self.queue.qsize() > 10000:
                 self.queue.get()           
 
