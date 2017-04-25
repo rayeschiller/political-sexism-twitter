@@ -21,13 +21,19 @@
                 //front end handling
                 //on receiving tweet message
                 socket.on('tweet', function(msg) {
-                    $("#tweetArea").prepend('<a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"><img id="profimg" src="' + msg.user.profile_image_url_https + '"</a><a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank">@' + msg.user.screen_name + '</a>:<div id="text"> ' + msg.text + '</div><br>');
-                        //profile image
-                        // '<a href = "https://twitter.com/' +msg.user.screen_name + '"target="_blank"><img id="profimg" src="' + msg.user.profile_image_url_https + '"/></a>
-                        //user name
-                        // '<p><span id="name">' + msg.user.name + '</span>
-                        // <span id="username"><a href="https://twitter.com/' + msg.user.screen_name + '"target="_blank"</a></span></p>
-                        // <div> id="text">' + msg.text + '</div>');
+                    // $("#tweetArea").prepend('<a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"><img id="profimg" src="' + msg.user.profile_image_url_https + '"</a><span id="name">' + msg.user.name + '</span><a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"> @' + msg.user.screen_name + '</a><div id="text"> ' + msg.text + '</div><br>');
+                    var date = msg.created_at;
+                    var text;
+                    if (msg.hasOwnProperty('extended_tweet')){
+                      text = msg.extended_tweet.full_text;
+                      print('has full text');
+                    } else {
+                      text = msg.text;
+                    }
+                      
+                    $('<a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"><img id="profimg" src="' + msg.user.profile_image_url_https + '"</a><div>' + msg.user.name + '<a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"> @' + msg.user.screen_name + '</a></div><div id="text"> ' + text + '</div><br><div id="date">' + date.substring(0,date.length-14) + '</div><br>').hide().prependTo('#tweetArea').fadeIn('slow');    
+                      
+                    
                     $('#tweetArea').linkify({
                         target: "_blank"    
                 });

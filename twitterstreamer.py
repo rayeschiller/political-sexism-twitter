@@ -1,4 +1,4 @@
-from twython import TwythonStreamer
+from twython import TwythonStreamer, Twython
 from config import CONF
 import gevent
 
@@ -12,12 +12,13 @@ class TwitterStreamer(TwythonStreamer):
 
     # On successful stream connection put tweet in queue
     def on_success(self,data):
-        self.queue.put_nowait(data)
-        if self.queue.qsize() > 10000:
-            self.queue.get()
-        # if 'text' in data:
-        #     print data['text'].encode('utf-8')             
+        if data['in_reply_to_status_id'] == None and data['in_reply_to_screen_name'] == None:
+            self.queue.put_nowait(data)
+            print(data)
+            if self.queue.qsize() > 10000:
+                self.queue.get()           
 
+    # On error 
     def on_error(self, status_code, data): 
         print status_code, "TwitterStreamer stopped because of an error"
         self.disconnect()
@@ -25,7 +26,12 @@ class TwitterStreamer(TwythonStreamer):
 # Twitter Watch Dog class
 class TwitterWatchDog:
     def __init__(self):
-        wordlist = ['whore hillary,pussy hillary, cunt hillary, skank hillary, bitch hillary, slut hillary, bimbo hillary, shrill hillary, feminazi hillary, hillary kitchen, fuck hillary, whore clinton,pussy clinton, cunt clinton, skank clinton, bitch clinton, slut clinton, bimbo clinton, shrill clinton, feminazi clinton, fuck clinton, clinton kitchen, whore ivanka,pussy ivanka, cunt ivanka, skank ivanka, bitch ivanka, slut ivanka, bimbo ivanka, shrill ivanka, feminazi ivanka, ivanka kitchen, fuck ivanka,whore ElizabethWarren,pussy ElizabethWarren, cunt ElizabethWarren, skank ElizabethWarren, bitch ElizabethWarren, slut ElizabethWarren, bimbo ElizabethWarren, shrill ElizabethWarren, feminazi ElizabethWarren, ElizabethWarren kitchen, fuck ElizabethWarren, whore Elizabeth Warren,pussy Elizabeth Warren, cunt Elizabeth Warren, skank Elizabeth Warren, bitch Elizabeth Warren, slut Elizabeth Warren, bimbo Elizabeth Warren, shrill Elizabeth Warren, feminazi Elizabeth Warren, Elizabeth Warren kitchen, fuck Elizabeth Warren, ']
+        wordlist = []
+        sexistWords = ['whore', 'pussy','cunt', 'skank', 'angry','bitch', 'slut', 'bimbo', 'shrill', 'husband', 'witch', 'PMS', 'Feminazi', 'dyke', 'dragon lady', 'lesbian', 'kitchen', 'menopause']
+        politicians = ['HillaryClinton','Hillary Clinton', 'Elizabeth Warren', 'SenWarren', 'ElizabethWarren', 'Ivanka', 'IvankaTrump', 'Kellyanne Conway', 'KellyannePolls', 'NancyPelosi', 'Nancy Pelosi']
+        for word in sexistWords:
+            for politician in politicians:
+                wordlist.append(word + ' ' + politician)
         self.streamer = TwitterStreamer(CONF['APP_KEY'], CONF['APP_SECRET'], CONF['OAUTH_TOKEN'], CONF['OAUTH_TOKEN_SECRET'])
         self.green = gevent.spawn(self.streamer.statuses.filter, track=wordlist)
 
