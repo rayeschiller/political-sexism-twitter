@@ -24,10 +24,14 @@
                     // $("#tweetArea").prepend('<a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"><img id="profimg" src="' + msg.user.profile_image_url_https + '"</a><span id="name">' + msg.user.name + '</span><a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"> @' + msg.user.screen_name + '</a><div id="text"> ' + msg.text + '</div><br>');
                     var date = msg.created_at;
                     var text;
-                    if (msg.hasOwnProperty('extended_tweet')){
+                    if (msg.hasOwnProperty('extended_tweet')){ //if tweet gets cut off
                       text = msg.extended_tweet.full_text;
                       print('has full text');
-                    } else {
+                    } else if (msg.hasOwnProperty('retweeted_status')){ //if it is a retweet
+                      text='RT @' + msg.retweeted_status.user.screen_name + ': ' + msg.retweeted_status.text;
+                    } 
+
+                    else {
                       text = msg.text;
                     }
                       
@@ -49,8 +53,8 @@
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">About</a></li>
+            <li role="presentation" class="active"><a href="/">Home</a></li>
+            <li role="presentation"><a href="/about">About</a></li>
             <li role="presentation"><a href="#">Rina Schiller</a></li>
           </ul>
         </nav>

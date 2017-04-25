@@ -44,7 +44,9 @@ def tweets_disconnect():
     watchDog.check_alive()
     print('server disconnected')
 
-# @app.route('/tweets2')
+@app.route('/about')
+def about():
+    return render_template("about.html")
 
    
 if __name__ == "__main__": #only start web server if this file is called directly  
