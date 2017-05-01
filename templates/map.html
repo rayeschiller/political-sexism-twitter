@@ -5,12 +5,11 @@
     <meta charset="UTF-8"> 
      {% block title %}Political Twitter Misogyny{% endblock %}
     {% block scripts %}{{super()}}<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>  
-    <script type="text/javascript" charset="utf-8">
-            $(document).ready(function(){
-      
-            });
-    </script> {% endblock %}
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src= "{{url_for('static',filename='js/map.js')}}"></script>
+    {% endblock %}
     {% block styles %} {{super()}}
         <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}"> 
         <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/jumbotron-narrow.css')}}">   {% endblock %}
@@ -30,19 +29,10 @@
         <h3 class="text-muted">Honors Thesis</h3>
       </div>
 
-      <div class="jumbotron">
-        <h1>About Political Gender Biases </h1>
-        <p class="lead">A project by Rina Schiller</p>
-        
-      </div>
-
       <div class="row marketing">
         <div class="col-lg-12">
-          <div style="overflow:auto; height: 500px;" ><br><br>
-            <p><i>Political Gender Biases: Exposing Sexist Tweets about Female Politicians</i> is an Honors Thesis Project completed 
-              Rina Schiller. Rina is a senior at Macaulay Honors at Hunter College and is majoring in Digital Media and minoring
-              in Computer Science and Women and Gender Studies. Her passion is at the intersection of technology, media, politics, and gender.</p
-
+          <div id = "map-container" style="overflow:auto; height: 500px;" ><br><br>
+          
           </div>
         </div>
       </div>

@@ -9,38 +9,47 @@
     <script type="text/javascript" src="static/linkify.min.js"></script>
     <script type="text/javascript" src="static/linkify-jquery.min.js"></script>      
     <script type="text/javascript" charset="utf-8">
-            $(document).ready(function(){
-                // start up the SocketIO connection the server
-                namespace = '/tweets';
-                var socket = io.connect('//' + document.domain + ':' + location.port + namespace);
-                socket.on('connect', function(){
-                    // socket.send('user has connected!');
-                    console.log('user connected on client side');
-                })
+      $(document).ready(function(){
+          // start up the SocketIO connection the server
+          namespace = '/tweets';
+          var socket = io.connect('//' + document.domain + ':' + location.port + namespace);
+          socket.on('connect', function(){
+              // socket.send('user has connected!');
+              console.log('user connected on client side');
+          })
 
-                //front end handling
-                //on receiving tweet message
-                socket.on('tweet', function(msg) {
-                    // $("#tweetArea").prepend('<a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"><img id="profimg" src="' + msg.user.profile_image_url_https + '"</a><span id="name">' + msg.user.name + '</span><a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"> @' + msg.user.screen_name + '</a><div id="text"> ' + msg.text + '</div><br>');
-                    var date = msg.created_at;
-                    var text;
-                    if (msg.hasOwnProperty('extended_tweet')){ //if tweet gets cut off
-                      text = msg.extended_tweet.full_text;
-                      print('has full text');
-                    } else if (msg.hasOwnProperty('retweeted_status')){ //if it is a retweet
-                      text='RT @' + msg.retweeted_status.user.screen_name + ': ' + msg.retweeted_status.text;
-                    } 
+          //front end handling
+          //on receiving tweet message
+          socket.on('tweet', function(msg) {
+              // console.log(msg)
+              var date = msg.created_at;
+              var text;
+              if (msg.hasOwnProperty('extended_tweet')){ //if tweet gets cut off
+                text = msg.extended_tweet.full_text;
+                console.log('text is '+ text)
+              } else if (msg.hasOwnProperty('retweeted_status')){ //if it is a retweet
+                try{
+                  text='RT @' + msg.retweeted_status.user.screen_name + ': ' + msg.retweeted_status.extended_tweet.full_text;
 
-                    else {
-                      text = msg.text;
-                    }
-                      
-                    $('<a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"><img id="profimg" src="' + msg.user.profile_image_url_https + '"</a><div>' + msg.user.name + '<a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"> @' + msg.user.screen_name + '</a></div><div id="text"> ' + text + '</div><br><div id="date">' + date.substring(0,date.length-14) + '</div><br>').hide().prependTo('#tweetArea').fadeIn('slow');    
-                    $('#tweetArea').linkify({
-                      target: "_blank"    
-                });
-            });
-        });
+                  }
+                catch(err){
+                  text='RT @' + msg.retweeted_status.user.screen_name + ': ' + msg.retweeted_status.text;
+                  
+                }
+              } 
+
+              else {
+                text = msg.text;
+
+              }
+              
+              //prepend tweet to tweetArea
+              $('<div><a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"><img id="profimg" src="' + msg.user.profile_image_url_https + '"</a><div>' + msg.user.name + '<a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"> @' + msg.user.screen_name + '</a></div><div id="text"> ' + text + '</div><br><div id="date">' + date.substring(0,date.length-14) + '</div></div>').hide().prependTo('#tweetArea').fadeIn('slow');    
+              $('#tweetArea').linkify({
+                target: "_blank"    
+              });
+      });
+  });
     </script> {% endblock %}
     {% block styles %} {{super()}}
         <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}"> 
@@ -55,7 +64,7 @@
           <ul class="nav nav-pills pull-right">
             <li role="presentation" class="active"><a href="/">Home</a></li>
             <li role="presentation"><a href="/about">About</a></li>
-            <li role="presentation"><a href="#">Rina Schiller</a></li>
+            <li role="presentation"><a href="/map">Map</a></li>
           </ul>
         </nav>
         <h3 class="text-muted">Honors Thesis</h3>
