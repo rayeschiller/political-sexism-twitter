@@ -7,9 +7,20 @@
     {% block scripts %}{{super()}}<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>  
     <script type="text/javascript" charset="utf-8">
-            $(document).ready(function(){
-      
-            });
+      $(document).ready(function(){
+          sexistWords = ['whore', 'pussy','cunt','whine', 'whining', 'skank', 'complaining', 'complain', 'bitch', 'moody', 'mother', 'hysterical', 'crazy', 'emotional', 'slut', 'bimbo', 'ball-busting','shrill', 'nagging', 'nag', 'witch', 'PMS', 'Feminazi', 'bossy', 'dyke', 'lesbian', 'kitchen', 'menopause']
+           politicians = ['HillaryClinton','Hillary Clinton', 'Elizabeth Warren', 'SenWarren', 'ElizabethWarren', 'Ivanka', 'IvankaTrump',  'SallyQYates', 'Sally Yates','Kellyanne Conway', 'KellyannePolls', 'NancyPelosi', 'Nancy Pelosi']
+          
+          for (var i=0;i<sexistWords.length;i++){
+            nameList = "<li>" + sexistWords[i] + "</li>"
+            $(nameList).hide().prependTo('#slist').fadeIn('slow');    
+          }
+          for (var i =0; i<politicians.length;i++){
+            plist = "<li>" + politicians[i] + "</li>"
+            $(plist).hide().prependTo('#plist').fadeIn('slow');
+          }
+          
+      });
     </script> {% endblock %}
     {% block styles %} {{super()}}
         <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}"> 
@@ -41,8 +52,15 @@
           <div style="overflow:auto; height: 500px;" ><br><br>
             <p><i>Political Gender Biases: Exposing Sexist Tweets about Female Politicians</i> is an Honors Thesis Project completed 
               Rina Schiller. Rina is a senior at Macaulay Honors at Hunter College and is majoring in Digital Media and minoring
-              in Computer Science and Women and Gender Studies. Her passion is at the intersection of technology, media, politics, and gender.</p
-
+              in Computer Science and Women and Gender Studies. Her passion is at the intersection of technology, media, politics, and gender.</p>
+              <br>
+            <p><b>How sexism is determined</b></p><br>
+            <p> In order to track only sexist tweets I compiled an array of female politicians along with specifically gendered or sexist words. I use the Twitter Streaming API to track any combination of female politician and sexist words. You can see the list below. </p><br>
+       
+            <b>Politicians</b>
+            <ul id="plist">  </ul>
+            <b> Gendered/Sexist Words</b>
+            <ul id="slist"> 
           </div>
         </div>
       </div>

@@ -39,8 +39,8 @@ class TwitterWatchDog:
     def __init__(self):
         #create word list for combining sexist words with female politicians
         wordlist = []
-        sexistWords = ['whore', 'pussy','cunt','whine', 'whining', 'skank', 'complaining', 'complain', 'bitch', 'slut', 'bimbo', 'shrill', 'witch', 'PMS', 'Feminazi', 'dyke', 'lesbian', 'kitchen', 'menopause']
-        politicians = ['HillaryClinton','Hillary Clinton', 'Elizabeth Warren', 'SenWarren', 'ElizabethWarren', 'Ivanka', 'IvankaTrump', 'Kellyanne Conway', 'KellyannePolls', 'NancyPelosi', 'Nancy Pelosi']
+        sexistWords = ['whore', 'pussy','cunt','whine', 'whining', 'skank', 'complaining', 'complain', 'bitch', 'moody', 'mother', 'hysterical', 'crazy', 'emotional', 'slut', 'bimbo', 'ball-busting','shrill', 'nagging', 'nag', 'witch', 'PMS', 'Feminazi', 'bossy', 'dyke', 'lesbian', 'kitchen', 'menopause']
+        politicians = ['HillaryClinton','Hillary Clinton', 'SallyQYates', 'Sally Yates', 'Elizabeth Warren', 'SenWarren', 'ElizabethWarren', 'Ivanka', 'IvankaTrump', 'Kellyanne Conway', 'KellyannePolls', 'NancyPelosi', 'Nancy Pelosi']
         for word in sexistWords:
             for politician in politicians:
                 wordlist.append(word + ' ' + politician)

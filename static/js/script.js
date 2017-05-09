@@ -35,16 +35,23 @@ $(document).ready(function(){
   //---RECEIVE TWEET---
     socket.on('tweet', function(msg) {
       //Get Location coordinates
-      var coordinates = []
-      try{
-        var location = msg.place.full_name
+      var coordinates = [];
+      var location;
+      if (msg.place != null){
+        location = msg.place.full_name
         console.log(location)
         var tmp = msg.place.bounding_box.coordinates[0][0]
         coordinates = tmp.reverse()  
-        
       }
-      catch(err){//do nothing
+      else if (msg.quoted_status != undefined) {
+        if (msg.quoted_status.place != null){
+          location = msg.quoted_status.place.full_name
+          var tmp = msg.quoted_status.place.bounding_box.coordinates[0][0]
+          coordinates = tmp.reverse()
+          console.log(location)
+        }
       }
+  
       var date = msg.created_at;
       var ndate = new Date(date);
       date = ndate.toString().substring(0,date.length-9);
@@ -62,7 +69,7 @@ $(document).ready(function(){
       var glocation = new google.maps.LatLng(coordinates[0], coordinates[1])   
       // put a marker in the location
       console.log(coordinates)
-      var marker = new google.maps.Marker({position: glocation, map: map,title:"tweet"  });
+      var marker = new google.maps.Marker({position: glocation, map: map,title:location });
       marker.setMap(map);
       
       var tweetformat = '<div id="iWindow"><a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"><img id="profimg" src="' + msg.user.profile_image_url_https + '"</a><div>' + msg.user.name + '<a href="https://twitter.com/' + msg.user.screen_name + '" target="_blank"> @' + msg.user.screen_name + '</a></div><div id="text"> ' + text + '</div><br><div id="date">' + date + '</div></div>'
