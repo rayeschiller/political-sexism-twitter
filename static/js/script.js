@@ -41,7 +41,7 @@ $(document).ready(function(){
         location = msg.place.full_name
         console.log(location)
         var tmp = msg.place.bounding_box.coordinates[0][0]
-        coordinates = tmp.reverse()  
+        coordinates = tmp.reverse()   //if place exists
       }
       else if (msg.quoted_status != undefined) {
         if (msg.quoted_status.place != null){
@@ -49,7 +49,15 @@ $(document).ready(function(){
           var tmp = msg.quoted_status.place.bounding_box.coordinates[0][0]
           coordinates = tmp.reverse()
           console.log(location)
-        }
+        } //if quoted status place exists
+      }
+      else if (msg.retweeted_status != undefined) {
+        if (msg.retweeted_status.place != null){
+          location = msg.retweeted_status.place.full_name
+          var tmp = msg.retweeted_status.place.bounding_box.coordinates[0][0]
+          coordinates = tmp.reverse()
+          console.log(location)
+        } //if quoted status place exists
       }
   
       var date = msg.created_at;
