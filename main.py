@@ -10,7 +10,7 @@ from flask_socketio import SocketIO, emit
 from twython import Twython
 from config import CONF
 from twitterstreamer import TwitterStreamer, TwitterWatchDog
-
+import sqlite3 as sql
 # server side 
 # Initialize and configure Flask and SocketIO
 app = Flask(__name__)  
@@ -70,13 +70,14 @@ def about():
 def list():
    con = sql.connect("database.db")
    con.row_factory = sql.Row
-   
    cur = con.cursor()
+   cur.execute("SELECT DISTINCT * FROM tweets WHERE tweet LIKE '%Hillary%' OR tweet LIKE '%Warren%' OR tweet LIKE '%Pelosi%' ORDER BY created_at DESC ")
+   democrats = cur.fetchall()
+   cur.execute("SELECT DISTINCT * FROM tweets WHERE tweet LIKE '%Kellyanne%' OR tweet LIKE '%Ivanka%' ORDER BY created_at DESC")
+   republicans = cur.fetchall()
+   con.close
 
-   cur.execute("SELECT DISTINCT * FROM tweets")
-   
-   rows = cur.fetchall();
-   return render_template("list.html", rows = rows)
+   return render_template("list.html", democrats = democrats, republicans = republicans)
    
 if __name__ == "__main__": #only start web server if this file is called directly  
     try:

@@ -4,6 +4,11 @@ p {
     color: #292f33
 }
 
+#pimage{
+    margin: 5px;
+    margin-bottom: 10px;
+    align-items: center
+}
 
 #name{
     font: normal 15px 'Helvetica Neue', Arial, sans-serif;  

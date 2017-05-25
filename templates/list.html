@@ -1,0 +1,83 @@
+
+{% extends "bootstrap/base.html" %}
+<html>
+<head>
+    <meta charset="UTF-8"> 
+     {% block title %}Political Twitter Misogyny{% endblock %}
+    {% block scripts %}{{super()}}<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+     <script type="text/javascript" src="static/linkify.min.js"></script>
+    <script type="text/javascript" src="static/linkify-jquery.min.js">
+    <script type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" charset="utf-8">
+      $(document).ready(function(){
+        
+          var date = $('#date').text();
+          var ndate = new Date(date);
+          $('#date').text(ndate.toString().substring(0,date.length-9));
+          
+          $('#username').linkify({
+            target: "_blank"    
+          });
+
+    
+      });
+    </script>
+    {% endblock %}
+    {% block styles %} {{super()}}
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}"> 
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/jumbotron-narrow.css')}}">   {% endblock %}
+    </head>
+
+   {% block content %}
+   <body>
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" ><a href="/">Home</a></li>
+            <li role="presentation"><a href="/about">About</a></li>
+            <li role="presentation" class="active"><a href="/list">List</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Honors Thesis</h3>
+      </div>
+
+      <div class="row marketing">
+       
+        <div class="col-lg-6">       
+             <img id ="pimage" src="static/img/clinton.jpeg"/>
+             <img id ="pimage"  src="static/img/warren.jpeg"/>
+             <img id ="pimage" src="static/img/pelosi.jpg"/><br>   
+             {% for row in democrats %}  
+                   <p id="text"> {{row["tweet"]}}</p>
+                   <p id="date">{{row["created_at"]}}</p>
+                   <p id="username"> @{{row["username"]}}</p>
+                   <br>
+             {% endfor %}  
+        </div>
+        <div class="col-lg-6">  
+              <img id ="pimage" src="static/img/kellyanne.jpeg"/>
+              <img id ="pimage" src="static/img/ivanka.jpeg"/>  <br>         
+             {% for row in republicans %}  
+                   <p id="text"> {{row["tweet"]}}</p>
+                   <p id="date">{{row["created_at"]}}</p>
+                   <p id="username"> @{{row["username"]}}</p>
+                   <br>
+             {% endfor %}  
+        </div>
+
+      </div>
+        <a href = "/">Go back to home page</a>
+      </div>
+
+      <footer class="footer">
+        <p>&copy; 2017 Rina Schiller</p>
+      </footer>
+
+    </div> <!-- /container -->
+ 
+    </body>
+   {% endblock %}  
+</html>

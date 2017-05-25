@@ -18,13 +18,43 @@ class TwitterStreamer(TwythonStreamer):
         # filter tweets to not be responses, medium filter level, and in english 
         # print(data)
         if data['in_reply_to_status_id'] == None and data['in_reply_to_screen_name'] == None and data['lang'] == 'en':
-            # conn = sql.connect('database.db')
-            # cur = conn.cursor()
-            # cur.execute("CREATE TABLE IF NOT EXISTS tweets(tweet text) ")
-            # cur.execute("INSERT INTO tweets (tweet) VALUES (?)", (data['text']))
-            # con.commit()
-            # con.close()
-            print(data)
+
+            if data.has_key('extended_tweet'):
+                tweettext = data['extended_tweet']['full_text']
+                print('extended tweet')
+            elif data.has_key('retweeted_status'):
+                try:
+                    tweettext = data['retweeted_status']['extended_tweet']['full_text']
+                except:
+                    tweettext = data['retweeted_status']['text']
+                print('retweeted_status')
+            else:
+                tweettext = data['text']
+                print('regular tweet')
+            location = ''
+            if data['place'] != None:
+                location = data['place']['full_name']
+            elif data.has_key('quoted_status'):
+                try:
+                    location = data['quoted_status']['place']['full_name']
+                except: 
+                    pass
+            elif data.has_key('retweeted_status'):
+                try:
+                    location = data['retweeted_status']['place']['full_name']
+                except:
+                    pass
+            
+            conn = sql.connect('database.db')
+            cur = conn.cursor()
+            # cur.execute("DROP TABLE tweets")
+            # cur.execute("CREATE TABLE IF NOT EXISTS tweets(tweet text, created_at text) ")
+            # cur.execute("ALTER TABLE tweets ADD location text")
+            cur.execute("INSERT INTO tweets(tweet, created_at, username, location) VALUES (?,?,?,?)", (tweettext, data['created_at'], data['user']['screen_name'], location))
+            conn.commit()
+            conn.close()
+            # print('table action executed')
+            # print('text is ' + tweettext)
             self.queue.put_nowait(data)
             if self.queue.qsize() > 10000:
                 self.queue.get()          
@@ -39,10 +69,8 @@ class TwitterWatchDog:
     def __init__(self):
         #create word list for combining sexist words with female politicians
         wordlist = []
-        sexistWords = ['whore', 'pussy','cunt','whine', 'whining', 'skank', 'complaining', 'complain', 'bitch', 'moody', 'mother', 'hysterical', 'crazy', 'emotional', 'slut', 'bimbo', 'ball-busting','shrill', 'nagging', 'nag', 'witch', 'PMS', 'Feminazi', 'bossy', 'dyke', 'lesbian', 'kitchen', 'menopause']
-        politicians = ['HillaryClinton','Hillary Clinton', 'SallyQYates', 'Sally Yates', 'Elizabeth Warren', 'SenWarren', 'ElizabethWarren', 'Ivanka', 'IvankaTrump', 'Kellyanne Conway', 'KellyannePolls', 'NancyPelosi', 'Nancy Pelosi']
-        for word in sexistWords:
-            for politician in politicians:
+        for word in CONF['SEXISTWORDS']:
+            for politician in CONF['POLITICIANS']:
                 wordlist.append(word + ' ' + politician)
         # print(wordlist)
         self.streamer = TwitterStreamer(CONF['APP_KEY'], CONF['APP_SECRET'], CONF['OAUTH_TOKEN'], CONF['OAUTH_TOKEN_SECRET'])

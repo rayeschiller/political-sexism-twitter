@@ -8,8 +8,9 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>  
     <script type="text/javascript" charset="utf-8">
       $(document).ready(function(){
-          sexistWords = ['whore', 'pussy','cunt','whine', 'whining', 'skank', 'complaining', 'complain', 'bitch', 'moody', 'mother', 'hysterical', 'crazy', 'emotional', 'slut', 'bimbo', 'ball-busting','shrill', 'nagging', 'nag', 'witch', 'PMS', 'Feminazi', 'bossy', 'dyke', 'lesbian', 'kitchen', 'menopause']
-           politicians = ['HillaryClinton','Hillary Clinton', 'Elizabeth Warren', 'SenWarren', 'ElizabethWarren', 'Ivanka', 'IvankaTrump',  'SallyQYates', 'Sally Yates','Kellyanne Conway', 'KellyannePolls', 'NancyPelosi', 'Nancy Pelosi']
+        // from config import CONF;
+          // sexistWords = CONF['SEXISTWORDS']
+          //  politicians = CONF['POLITICIANS']
           
           for (var i=0;i<sexistWords.length;i++){
             nameList = "<li>" + sexistWords[i] + "</li>"
