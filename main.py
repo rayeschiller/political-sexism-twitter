@@ -73,7 +73,7 @@ def list():
    con = sql.connect("database.db")
    con.row_factory = sql.Row
    cur = con.cursor()
-   cur.execute("SELECT DISTINCT * FROM tweets WHERE tweet LIKE '%Hillary%' OR tweet LIKE '%Warren%' OR tweet LIKE '%Pelosi%' ORDER BY CONVERT(datetime, created_at ) DESC")
+   cur.execute("SELECT DISTINCT * FROM tweets WHERE tweet LIKE '%Hillary%' OR tweet LIKE '%Warren%' OR tweet LIKE '%Pelosi%' ORDER BY created_at DESC")
    democrats = cur.fetchall()
    cur.execute("SELECT DISTINCT * FROM tweets WHERE tweet LIKE '%Kellyanne%' OR tweet LIKE '%Ivanka%' OR tweet LIKE '%Melania%'")
    republicans = cur.fetchall()
