@@ -4,10 +4,15 @@ p {
     color: #292f33
 }
 
+.count{
+    font: normal 36px 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    color: grey;
+}
 #pimage{
     margin: 5px;
     margin-bottom: 10px;
-    align-items: center
+    border-radius: 30px;
 }
 
 #name{

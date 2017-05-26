@@ -8,16 +8,16 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>  
     <script type="text/javascript" charset="utf-8">
       $(document).ready(function(){
-        // from config import CONF;
-          // sexistWords = CONF['SEXISTWORDS']
-          //  politicians = CONF['POLITICIANS']
+          var sexistWords =['whore', 'pussy','cunt','whining', 'skank', 'bitch', 'moody', 'slut', 'bimbo', 'ball-busting','shrill', 'nagging', 'nag', 'witch', 'PMS', 'Feminazi', 'bossy', 'dyke', 'lesbian', 'menopause', 'vagina']
+          var politicians = ['HillaryClinton','Hillary Clinton', 'SallyQYates', 'Sally Yates', 'Elizabeth Warren', 'SenWarren', 'ElizabethWarren', 'Ivanka', 'IvankaTrump', 'Kellyanne Conway', 'KellyannePolls', 'NancyPelosi', 'Nancy Pelosi', 'Melania Trump', 'MelaniaTrump', 'FLOTUS']
+
           
           for (var i=0;i<sexistWords.length;i++){
-            nameList = "<li>" + sexistWords[i] + "</li>"
+            nameList = "<p>" + sexistWords[i] + "</p>"
             $(nameList).hide().prependTo('#slist').fadeIn('slow');    
           }
           for (var i =0; i<politicians.length;i++){
-            plist = "<li>" + politicians[i] + "</li>"
+            plist = "<p>" + politicians[i] + "</p>"
             $(plist).hide().prependTo('#plist').fadeIn('slow');
           }
           
@@ -34,9 +34,9 @@
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="/">Home</a></li>
-            <li role="presentation"><a href="/about">About</a></li>
-            <li role="presentation"><a href="/map">Map</a></li>
+            <li role="presentation" ><a href="/">Home</a></li>
+            <li role="presentation"><a href="/list">D v. R</a></li>
+            <li role="presentation" class="active"><a href="/about">About</a></li>
           </ul>
         </nav>
         <h3 class="text-muted">Political Gender Biases</h3>
@@ -50,18 +50,28 @@
 
       <div class="row marketing">
         <div class="col-lg-12">
-          <div style="overflow:auto; height: 500px;" ><br><br>
+          <div><br><br>
             <p><i>Political Gender Biases: Exposing Sexist Tweets about Female Politicians</i> is an Honors Thesis Project completed 
               Rina Schiller. Rina is a senior at Macaulay Honors at Hunter College and is majoring in Digital Media and minoring
               in Computer Science and Women and Gender Studies. Her passion is at the intersection of technology, media, politics, and gender.</p>
               <br>
-            <p><b>How sexism is determined</b></p><br>
-            <p> In order to track only sexist tweets I compiled an array of female politicians along with specifically gendered or sexist words. I use the Twitter Streaming API to track any combination of female politician and sexist words. You can see the list below. </p><br>
-       
-            <b>Politicians</b>
-            <ul id="plist">  </ul>
-            <b> Gendered/Sexist Words</b>
-            <ul id="slist"> 
+
+            <b>Main Features</b>
+            <p> The home page presents to the user a live stream of sexist Tweets about female politicians as well as the location of where the tweet was sent, as long as the information is available. When the page first loads, it calls the Twitter search API and outputs any tweet and its location (if available) within the past 10 days that contain the words ‘bitch’ about any of the female politicians listed below. If the user were to remain on the page, he/she would see new tweets and locations populating the feed in real time to when the user tweeted it out. </p><br>
+            <p>All the tweets are also being put into a database which the user can see on the page ‘D v. R’. This page separates the tweets in the database by Democratic and Republican women and also has the count for the amount of tweets on each party. This page is not live and would need a refresh to see the latest tweets and counts. </p><br>
+
+            <p><b>How sexism is determined</b></p>
+            <p> In order to track only sexist tweets I compiled an array of female politicians along with specifically gendered or sexist words. I use the Twitter Streaming API to track any combination of female politician and sexist words. The tweet will only be added to the feed if it contains at least one element of each list. You can see the lists below. </p><br>
+            
+            <div class="col-sm-6"> 
+              <b> Gendered/Sexist Words</b>
+              <div id="slist"> </div>
+            </div>
+            <div class="col-sm-6"> 
+              <b>Politicians</b>
+              <div id="plist">  </div>
+            </div>
+            
           </div>
         </div>
       </div>
