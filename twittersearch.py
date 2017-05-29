@@ -1,18 +1,17 @@
 '''
-Twitter search API using twittersearch wrapper 
+Twitter search API using twittersearch wrapper for database insertion 
 '''
 
 # enable debugging
 import cgitb
 from TwitterSearch import *
 import sqlite3 as sql
-
+from config import CONF
 def getTweets():
     wordlist = []
     # sexistWords = ['whore', 'pussy','cunt','skank','bitch', 'slut', 'bimbo', 'shrill', 'witch', 'Feminazi', 'dyke', 'lesbian', 'kitchen']
-    # politicians = ['HillaryClinton','Hillary Clinton', 'Elizabeth Warren', 'SenWarren', 'ElizabethWarren', 'Ivanka', 'IvankaTrump', 'Kellyanne Conway', 'KellyannePolls', 'NancyPelosi', 'Nancy Pelosi']
+    politicians = ['HillaryClinton','Hillary Clinton', 'Elizabeth Warren', 'SenWarren', 'ElizabethWarren', 'Ivanka', 'IvankaTrump', 'Kellyanne Conway', 'KellyannePolls', 'NancyPelosi', 'Nancy Pelosi']
     sexistWords = ['whore', 'bitch']
-    politicians = ['ElizabethWarren', 'SenWarren']
     for word in sexistWords:
         for politician in politicians:
             wordlist.append(word + ' ' + politician)
@@ -20,7 +19,6 @@ def getTweets():
     tweets = []
     try:
         tso = TwitterSearchOrder() # create a TwitterSearchOrder object
-        '''TODO: Figure out how to search list of keywords as OR possibilities'''
 
         tso.set_keywords(wordlist, or_operator = True) # all the terms to search for
         tso.set_language('en') 
