@@ -46,7 +46,7 @@ $(document).ready(function(){
     var location;
     if (msg.place != null){
       location = msg.place.full_name
-      console.log(location)
+      // console.log(location)
       var tmp = msg.place.bounding_box.coordinates[0][0]
       coordinates = tmp.reverse()   //if place exists
       }
@@ -55,7 +55,6 @@ $(document).ready(function(){
           location = msg.quoted_status.place.full_name
           var tmp = msg.quoted_status.place.bounding_box.coordinates[0][0]
           coordinates = tmp.reverse()
-          console.log(location)
         } //if quoted status place exists
       }
       else if (msg.retweeted_status != undefined) {
@@ -63,12 +62,11 @@ $(document).ready(function(){
           location = msg.retweeted_status.place.full_name
           var tmp = msg.retweeted_status.place.bounding_box.coordinates[0][0]
           coordinates = tmp.reverse()
-          console.log(location)
         } //if quoted status place exists
       }
     var glocation = new google.maps.LatLng(coordinates[0], coordinates[1])   
     // put a marker in the location
-    console.log(coordinates)
+    // console.log(coordinates)
     var marker = new google.maps.Marker({position: glocation, map: map,title:location });
     marker.setMap(map);
     
